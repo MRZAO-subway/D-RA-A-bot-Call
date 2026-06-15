@@ -1,0 +1,22 @@
+services:
+  discord-afk-bot:
+    build: .
+    container_name: discord-afk-bot
+    restart: unless-stopped
+    env_file:
+      - .env
+    # Resource limits for low-spec servers
+    deploy:
+      resources:
+        limits:
+          memory: 128M
+          cpus: "0.25"
+        reservations:
+          memory: 64M
+          cpus: "0.10"
+    # Logging - prevent log files from growing endlessly
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "3"
